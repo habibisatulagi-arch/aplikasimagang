@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Default deny all documents
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(userId);
+      allow update: if isSignedIn() && (request.auth.uid == userId || incoming().diff(existing()).affectedKeys().hasOnly(['statusMagang', 'tempatMagangAktif']));
+      allow delete: if false;
+    }
+
+    // Lowongan Magang Collection (Available for students to browse and apply)
+    match /lowongan/{lowonganId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Logbook Harian Collection
+    match /logbook/{logbookId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(logbookId);
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // Lamaran Magang Collection
+    match /lamaran/{lamaranId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(lamaranId);
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // Attendance Collection
+    match /attendance/{attendanceId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(attendanceId);
+      allow update: if isSignedIn();
+      allow delete: if false;
+    }
+  }
+}

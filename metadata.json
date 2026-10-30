@@ -1,0 +1,6 @@
+{
+  "name": "MagangKu - Magang & Jurnal Harian Siswa",
+  "description": "Aplikasi pencarian magang dan jurnal harian khusus siswa SMA/SMK dengan fitur aksesibilitas tinggi, input suara, absensi 1-ketuk, dan ekspor laporan guru.",
+  "requestFramePermissions": ["geolocation", "microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

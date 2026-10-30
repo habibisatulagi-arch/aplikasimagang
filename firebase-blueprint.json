@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Profil siswa SMA/SMK atau guru pembimbing dalam sistem MagangKu",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nama": { "type": "string", "maxLength": 100 },
+        "nisn": { "type": "string", "maxLength": 20 },
+        "asalSekolah": { "type": "string", "maxLength": 150 },
+        "jurusan": { "type": "string", "maxLength": 100 },
+        "kelas": { "type": "string", "maxLength": 50 },
+        "noHp": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["siswa", "guru_pembimbing"] },
+        "statusMagang": { "type": "string", "enum": ["belum_magang", "sedang_magang", "selesai_magang"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "nama", "asalSekolah", "statusMagang"]
+    },
+    "LowonganMagang": {
+      "title": "LowonganMagang",
+      "description": "Lowongan tempat magang/PKL ramah pemula dari industri mitra sekolah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "posisi": { "type": "string", "maxLength": 150 },
+        "perusahaan": { "type": "string", "maxLength": 150 },
+        "logo": { "type": "string", "maxLength": 20 },
+        "lokasi": { "type": "string", "maxLength": 100 },
+        "kota": { "type": "string", "maxLength": 100 },
+        "kategori": { "type": "string", "maxLength": 50 },
+        "tipeKerja": { "type": "string", "maxLength": 50 },
+        "uangSaku": { "type": "string", "maxLength": 100 },
+        "sertifikat": { "type": "boolean" },
+        "kuotaTersisa": { "type": "number" },
+        "durasiBulan": { "type": "number" },
+        "deskripsiSingkat": { "type": "string", "maxLength": 500 },
+        "alamatLengkap": { "type": "string", "maxLength": 300 },
+        "kontakPerusahaan": { "type": "string", "maxLength": 150 }
+      },
+      "required": ["id", "posisi", "perusahaan", "kategori", "tipeKerja", "kuotaTersisa"]
+    },
+    "LogbookHarian": {
+      "title": "LogbookHarian",
+      "description": "Catatan kegiatan harian siswa magang dengan input suara & bukti foto",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "tanggal": { "type": "string", "maxLength": 20 },
+        "jamMulai": { "type": "string", "maxLength": 10 },
+        "jamSelesai": { "type": "string", "maxLength": 10 },
+        "judulKegiatan": { "type": "string", "maxLength": 200 },
+        "deskripsiKegiatan": { "type": "string", "maxLength": 2000 },
+        "fotoBukti": { "type": "string", "maxLength": 2000 },
+        "fotoCaption": { "type": "string", "maxLength": 250 },
+        "parafGuru": { "type": "boolean" },
+        "catatanGuru": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "tanggal", "jamMulai", "jamSelesai", "judulKegiatan", "deskripsiKegiatan"]
+    },
+    "LamaranMagang": {
+      "title": "LamaranMagang",
+      "description": "Data pengajuan lamaran magang siswa ke perusahaan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "lowonganId": { "type": "string", "maxLength": 128 },
+        "posisi": { "type": "string", "maxLength": 150 },
+        "perusahaan": { "type": "string", "maxLength": 150 },
+        "tanggalLamar": { "type": "string", "maxLength": 30 },
+        "status": { "type": "string", "enum": ["terkirim", "ditinjau", "diterima", "belum_sesuai"] },
+        "namaSuratPengantar": { "type": "string", "maxLength": 200 },
+        "catatanSiswa": { "type": "string", "maxLength": 1000 },
+        "pesanPerusahaan": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "lowonganId", "posisi", "perusahaan", "status"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Rekap absensi kehadiran harian siswa dengan GPS dan waktu",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "tanggal": { "type": "string", "maxLength": 20 },
+        "waktuMasuk": { "type": "string", "maxLength": 10 },
+        "lokasiMasuk": { "type": "string", "maxLength": 200 },
+        "waktuPulang": { "type": "string", "maxLength": 10 },
+        "lokasiPulang": { "type": "string", "maxLength": 200 },
+        "status": { "type": "string", "enum": ["hadir", "izin", "sakit", "libur"] }
+      },
+      "required": ["id", "userId", "tanggal", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Profil data siswa atau guru pembimbing"
+    },
+    "/lowongan/{lowonganId}": {
+      "schema": "LowonganMagang",
+      "description": "Katalog lowongan magang ramah siswa SMA/SMK"
+    },
+    "/logbook/{logbookId}": {
+      "schema": "LogbookHarian",
+      "description": "Jurnal kegiatan harian siswa magang"
+    },
+    "/lamaran/{lamaranId}": {
+      "schema": "LamaranMagang",
+      "description": "Riwayat pengajuan lamaran magang siswa"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "AttendanceRecord",
+      "description": "Catatan absensi GPS harian siswa magang"
+    }
+  }
+}
