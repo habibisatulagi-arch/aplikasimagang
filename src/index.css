@@ -42,7 +42,12 @@
   border-color: #0f172a !important;
 }
 
-/* Base Accessible Font Scaling */
+/* Base Accessible Font Scaling & Viewport overflow guard */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 html {
   font-size: calc(16px * var(--font-scale));
 }

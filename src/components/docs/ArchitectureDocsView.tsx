@@ -168,7 +168,7 @@ export const ArchitectureDocsView: React.FC = () => {
 └── vite.config.ts`;
 
   return (
-    <div className="pb-28 pt-2 px-4 space-y-4">
+    <div className="pb-28 pt-2 px-4 space-y-4 min-w-0 max-w-full">
       {/* Title */}
       <div className="flex items-center justify-between">
         <div>

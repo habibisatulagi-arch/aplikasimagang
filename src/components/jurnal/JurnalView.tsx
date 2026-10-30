@@ -228,10 +228,10 @@ export const JurnalView: React.FC = () => {
       )}
 
       {/* 2-COLUMN DESKTOP / LAPTOP LAYOUT */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start w-full min-w-0">
         
         {/* LEFT COLUMN: Attendance Kiosk + Direct Input Form (col-span-5) */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4 min-w-0">
           
           {/* Absensi Kiosk Card */}
           <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-3">
@@ -489,7 +489,7 @@ export const JurnalView: React.FC = () => {
         </div>
 
         {/* RIGHT COLUMN: Logbook Records Feed on Laptop & Desktop (col-span-7) */}
-        <div className="lg:col-span-7 space-y-4">
+        <div className="lg:col-span-7 space-y-4 min-w-0">
           {/* Header & Filter Controls */}
           <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>

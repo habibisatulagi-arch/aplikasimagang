@@ -30,7 +30,7 @@ const MainAppContent: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen bg-slate-100 text-slate-900 flex flex-col ${
+      className={`min-h-screen bg-slate-100 text-slate-900 flex flex-col w-full max-w-full overflow-x-hidden ${
         deviceViewMode === 'mobile'
           ? 'items-center justify-start py-0 sm:py-6 px-0 sm:px-4'
           : 'w-full'
@@ -48,7 +48,7 @@ const MainAppContent: React.FC = () => {
 
           <Header />
 
-          <main id="main-content" className="flex-1 overflow-y-auto bg-slate-100/60 pb-20 focus:outline-none">
+          <main id="main-content" className="flex-1 overflow-y-auto bg-slate-100/60 pb-20 focus:outline-none min-w-0">
             {renderContent()}
           </main>
 
@@ -56,10 +56,10 @@ const MainAppContent: React.FC = () => {
         </div>
       ) : (
         /* Full Desktop & Laptop Portal Layout (Baseline 1440px / max-w-7xl) */
-        <div className="w-full min-h-screen flex flex-col bg-slate-100/60">
+        <div className="w-full max-w-full min-h-screen flex flex-col bg-slate-100/60 overflow-x-hidden">
           <Header />
 
-          <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 focus:outline-none">
+          <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 focus:outline-none min-w-0">
             {renderContent()}
           </main>
 
